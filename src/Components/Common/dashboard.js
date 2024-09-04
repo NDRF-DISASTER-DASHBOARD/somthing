@@ -26,7 +26,7 @@ const Dashboard = () => {
         location: location,
       });
       
-      fetchProcessedData();
+      fetchProcessedData(); // Fetch data immediately after the search
     } catch (error) {
       console.error('Error sending data to backend:', error);
       setError('Failed to perform search. Please try again.');
@@ -56,14 +56,9 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    const fetchData = () => {
-      fetchProcessedData();
-    };
+    const interval = setInterval(fetchProcessedData, 1000); // Fetch every second
 
-    fetchData(); // Fetch immediately on mount
-    const interval = setInterval(fetchData, 5000); // Fetch every 5 seconds
-
-    return () => clearInterval(interval);
+    return () => clearInterval(interval); // Clean up on unmount
   }, []);
 
   return (
